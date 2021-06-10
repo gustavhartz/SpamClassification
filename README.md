@@ -1,6 +1,6 @@
 # SpamClassification
 
-This project is about classifying emails/sms texts as spam or ham using deep learning. Given the data for this task is text data we will be using the [huggingface transformers](https://huggingface.co/transformers/). This libraray provides pretrained tokenizer modules that eliminates the need to develop our own text preprocessing, and instead focus on the ML Ops apsects of the implementation. 
+This project is about classifying emails/sms texts as *spam* or *ham* using deep learning. Given the data for this task is text data we will be using the [huggingface transformers](https://huggingface.co/transformers/). This libraray provides pretrained tokenizer modules that eliminates the need to develop our own text preprocessing, and instead focus on the ML Ops apsects of the implementation. 
 
 Data is collected from the Kaggle [Spam Text Message Classification] (https://www.kaggle.com/team-ai/spam-text-message-classification) dataset. This data is a collection of personal text messages and include many informal words. 
 
