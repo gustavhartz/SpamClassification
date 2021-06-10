@@ -130,3 +130,7 @@ dmypy.json
 
 # Local
 .DS_Store
+
+
+#Notebooks
+*.ipynb
