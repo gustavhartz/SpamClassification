@@ -4,7 +4,7 @@ This project is about classifying emails/sms texts as *spam* or *ham* using deep
 
 Data is collected from the Kaggle [Spam Text Message Classification] (https://www.kaggle.com/team-ai/spam-text-message-classification) dataset. This data is a collection of personal text messages and include many informal words. 
 
-We choose a LSTM network as our classifier as this type of model can be very good at handling sequential data because of the recurrent structure of the network. 
+We will use an LSTM network as our classifier, as this type of model can be very good at handling sequential data because of it's recurrent structure. 
 
 Group members:
 - Simon Jacobsen, s152655
