@@ -13,4 +13,6 @@ Group members:
 - Gustav Hartz, s174315
 
 
+to get data:
 
+run ´src/data/get_data.py´
