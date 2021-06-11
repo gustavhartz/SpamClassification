@@ -1,2 +1,0 @@
-- name: Lintly-Flake8
-  uses: grantmcconnaughey/lintly-flake8-github-action@v1.0
