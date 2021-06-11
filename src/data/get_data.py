@@ -40,9 +40,9 @@ def main(process_data):
     val_data = raw_data[msk][~msk_]
     test_data = raw_data[~msk]
 
-    train_data.to_csv('data/processed/train_set.csv')
-    val_data.to_csv('data/processed/val_set.csv')
-    test_data.to_csv('data/processed/test_set.csv')
+    train_data.to_csv('data/processed/train_set.csv', index=False)
+    val_data.to_csv('data/processed/val_set.csv', index=False)
+    test_data.to_csv('data/processed/test_set.csv', index=False)
     
 
 
