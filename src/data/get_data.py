@@ -32,7 +32,7 @@ def main(process_data):
 
     #split data into train/test/val
     raw_data = pd.read_csv('data/raw/SPAM text message 20170820 - Data.csv')
-    
+    np.random.seed(404)
     msk = np.random.rand(len(raw_data)) < 0.8
     msk_ = np.random.rand(len(raw_data[msk])) < 0.8
 
