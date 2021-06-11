@@ -15,4 +15,4 @@ Group members:
 
 to get data:
 
-run ´src/data/get_data.py´
+run ```src/data/get_data.py```
