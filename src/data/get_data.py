@@ -33,8 +33,11 @@ def main(process_data):
         # time.sleep(1)
         print("Succesfully downloaded kaggle data")
 
-    # split data into train/test/val
-    raw_data = pd.read_csv("data/raw/SPAM text message 20170820 - Data.csv")
+    #split data into train/test/val
+    raw_data = pd.read_csv('data/raw/SPAM text message 20170820 - Data.csv')
+    cat = {'spam': 1,'ham': 0}
+    raw_data.Category = [cat[item] for item in raw_data.Category]
+    
     np.random.seed(404)
     msk = np.random.rand(len(raw_data)) < 0.8
     msk_ = np.random.rand(len(raw_data[msk])) < 0.8
@@ -43,9 +46,9 @@ def main(process_data):
     val_data = raw_data[msk][~msk_]
     test_data = raw_data[~msk]
 
-    train_data.to_csv("data/processed/train_set.csv")
-    val_data.to_csv("data/processed/val_set.csv")
-    test_data.to_csv("data/processed/test_set.csv")
+    train_data.to_csv('data/processed/train_set.csv', index=False)
+    val_data.to_csv('data/processed/val_set.csv', index=False)
+    test_data.to_csv('data/processed/test_set.csv', index=False)
 
 
 if __name__ == "__main__":
