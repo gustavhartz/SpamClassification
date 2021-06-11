@@ -1,6 +1,6 @@
 name: Run isort
-on:
-  - push
+
+on: [push]
 
 jobs:
   build:
