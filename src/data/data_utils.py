@@ -2,8 +2,9 @@ import torch
 import pandas as pd
 from torch.utils.data import Dataset
 
+
 class SPAMorHAMDataset(Dataset):
-    '''SPAM or HAM data'''
+    """SPAM or HAM data"""
 
     def __init__(self, csv_file, input_dim, tokenizer=None):
         """
@@ -12,7 +13,8 @@ class SPAMorHAMDataset(Dataset):
             transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
-        self.frame = pd.read_csv(csv_file, index_col=0).reset_index()
+        self.frame = pd.read_csv(csv_file, index_col=0)
+        self.frame.Category = self.frame.Category.map({"spam": 1, "ham": 0})
         self.tokenizer = tokenizer
         self.max_length = input_dim
 
@@ -22,14 +24,19 @@ class SPAMorHAMDataset(Dataset):
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
-        print(idx)
+
         message = [self.frame.iloc[idx, 1]]
-        print(message)
         label = torch.Tensor([self.frame.iloc[idx, 0]])
-        print(label.shape)
 
         if self.tokenizer:
-            message = self.tokenizer(message, padding='max_length', truncation=True, max_length=self.max_length, add_special_tokens=False, return_tensors='pt')['input_ids']
+            message = self.tokenizer(
+                message,
+                padding="max_length",
+                truncation=True,
+                max_length=self.max_length,
+                add_special_tokens=False,
+                return_tensors="pt",
+            )["input_ids"]
 
-        sample = {'message': message, 'label': label}
+        sample = {"message": message.squeeze(), "label": label}
         return sample
