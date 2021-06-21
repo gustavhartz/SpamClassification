@@ -11,6 +11,7 @@ class LSTM(nn.Module):
         hidden_dimension=128,
         embedding_dim=50,
         text_len=40,
+        dropout=0.5,
     ):
         super(LSTM, self).__init__()
 
@@ -25,7 +26,7 @@ class LSTM(nn.Module):
             batch_first=True,
             bidirectional=False,
         )
-        self.drop = nn.Dropout(p=0.5)
+        self.drop = nn.Dropout(p=dropout)
         self.fc = nn.Linear(text_len * hidden_dimension, 1)
 
     def forward(self, text):
