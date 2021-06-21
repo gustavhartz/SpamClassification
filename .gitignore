@@ -145,3 +145,6 @@ lightning_logs/
 
 #Hydra
 outputs/
+
+#Ved ikke hvilken pakke
+reports/
