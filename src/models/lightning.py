@@ -22,12 +22,11 @@ class lynModel(pl.LightningModule):
         output = self.model(messages)
         loss = F.binary_cross_entropy(output, labels)
 
-        self.log(
-            "train_loss", loss)
+        self.log("train_loss", loss)
 
         preds = torch.zeros(output.shape)
         preds[output >= 0.5] = 1
-        self.log('train_acc', torch.sum(preds == labels) / len(preds))
+        self.log("train_acc", torch.sum(preds == labels) / len(preds))
 
         return loss
 
@@ -42,16 +41,19 @@ class lynModel(pl.LightningModule):
         preds = torch.zeros(output.shape)
         preds[output >= 0.5] = 1
 
-        self.log(
-            "val_loss",
-            loss
-        )
-        self.log(
-            "val_acc",
-            torch.sum(preds == labels) / len(labels)
-        )
+        self.log("val_loss", loss)
+        self.log("val_acc", torch.sum(preds == labels) / len(labels))
 
         return accuracy_score(labels.numpy(), preds.numpy())
 
+    def validation_epoch_end(self, validation_step_outputs):
+        ct, sum = 0, 0
+        for pred in validation_step_outputs:
+            sum += pred
+            ct += 1
+        return sum / ct
+
     def configure_optimizers(self):
-        return torch.optim.SGD(self.model.parameters(), lr=self.lr, momentum=self.momentum)
+        return torch.optim.SGD(
+            self.model.parameters(), lr=self.lr, momentum=self.momentum
+        )
