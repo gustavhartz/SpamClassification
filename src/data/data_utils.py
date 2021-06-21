@@ -13,8 +13,7 @@ class SPAMorHAMDataset(Dataset):
             transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
-        self.frame = pd.read_csv(csv_file, index_col=0)
-        self.frame.Category = self.frame.Category.map({"spam": 1, "ham": 0})
+        self.frame = pd.read_csv(csv_file)
         self.tokenizer = tokenizer
         self.max_length = input_dim
 
