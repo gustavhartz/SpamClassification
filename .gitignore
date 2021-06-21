@@ -137,3 +137,11 @@ dmypy.json
 
 #data
 data/
+
+
+#torch lightning
+lightning_logs/
+
+
+#Hydra
+outputs/
