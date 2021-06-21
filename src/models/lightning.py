@@ -9,10 +9,11 @@ from sklearn.metrics import accuracy_score
 
 
 class lynModel(pl.LightningModule):
-    def __init__(self, model, optimizer_lr=0.01):
+    def __init__(self, model, optimizer_lr=0.01, optimizer_momentum=0.9):
         super().__init__()
         self.model = model
         self.lr = optimizer_lr
+        self.momentum = optimizer_momentum
 
     def training_step(self, batch, batch_idx):
         messages = batch["message"]
@@ -22,8 +23,11 @@ class lynModel(pl.LightningModule):
         loss = F.binary_cross_entropy(output, labels)
 
         self.log(
-            "train_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=False
-        )
+            "train_loss", loss)
+
+        preds = torch.zeros(output.shape)
+        preds[output >= 0.5] = 1
+        self.log('train_acc', torch.sum(preds == labels) / len(preds))
 
         return loss
 
@@ -40,22 +44,14 @@ class lynModel(pl.LightningModule):
 
         self.log(
             "val_loss",
-            loss,
-            on_step=True,
-            on_epoch=True,
-            prog_bar=True,
-            logger=False,
+            loss
+        )
+        self.log(
+            "val_acc",
+            torch.sum(preds == labels) / len(labels)
         )
 
         return accuracy_score(labels.numpy(), preds.numpy())
 
-    def validation_epoch_end(self, validation_step_outputs):
-        ct, sum = 0, 0
-        for pred in validation_step_outputs:
-            sum += pred
-            ct += 1
-
-        # log sum/ct
-
     def configure_optimizers(self):
-        return torch.optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9)
+        return torch.optim.SGD(self.model.parameters(), lr=self.lr, momentum=self.momentum)

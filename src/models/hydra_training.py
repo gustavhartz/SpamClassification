@@ -1,18 +1,8 @@
-import wandb
-import sys
 import torch
 import os
-
-import numpy as np
-
-import torch.nn as nn
-import torch.optim as optim
-import matplotlib.pyplot as plt
 import pytorch_lightning as pl
-
-from sklearn.metrics import accuracy_score
-from tqdm import tqdm
 from transformers import AutoTokenizer
+from pytorch_lightning.loggers import WandbLogger
 
 from src.models.model import LSTM
 from src.data.data_utils import SPAMorHAMDataset
@@ -21,22 +11,21 @@ from src.models.lightning import lynModel
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
+from dotenv import load_dotenv,find_dotenv
+load_dotenv(find_dotenv())
 
-@hydra.main(config_path="../", config_name="config")
+
+@hydra.main(config_path="../../config", config_name="config_run_1.yaml")
 def my_app(cfg: DictConfig) -> None:
-
-    print(OmegaConf.to_yaml(cfg))
-
     # Hyperparameters
-    token_len = cfg.token_len  # 40
-    batch_size = cfg.batch_size  # 128
-    hidden_dim = cfg.hidden_dim  # 128
-    embedding_dim = cfg.embedding_dim  # 20
-    dropout = cfg.dropout  # 0.5
-    lr = cfg.lr  # 0.01
-    epochs = cfg.epochs  # 20
-
-    seed = cfg.seed
+    token_len = cfg.data.token_len  # 40
+    batch_size = cfg.data.batch_size  # 128
+    hidden_dim = cfg.model.hidden_dim  # 128
+    embedding_dim = cfg.model.embedding_dim  # 20
+    dropout = cfg.model.dropout  # 0.5
+    lr = cfg.model.lr  # 0.01
+    epochs = cfg.model.epochs  # 20
+    seed = cfg.enviroment.torch_seed
 
     torch.manual_seed(seed)
 
@@ -48,12 +37,12 @@ def my_app(cfg: DictConfig) -> None:
 
     OG_path = hydra.utils.get_original_cwd()
     train_set = SPAMorHAMDataset(
-        os.path.join(OG_path, "./data/processed/test_set.csv"),
+        os.path.join(OG_path, "data/processed/test_set.csv"),
         input_dim=token_len,
         tokenizer=tokenizer,
     )
     val_set = SPAMorHAMDataset(
-        os.path.join(OG_path, "./data/processed/val_set.csv"),
+        os.path.join(OG_path, "data/processed/val_set.csv"),
         input_dim=token_len,
         tokenizer=tokenizer,
     )
@@ -77,8 +66,12 @@ def my_app(cfg: DictConfig) -> None:
         dropout=dropout,
     )
 
-    trainer = pl.Trainer(max_epochs=epochs)
     litmodel = lynModel(model, optimizer_lr=lr)
+    if cfg.enviroment.wandb:
+        wandb_logger = WandbLogger(project='pytorchlightning')
+        trainer = pl.Trainer(max_epochs=epochs, logger=wandb_logger)
+    else:
+        trainer = pl.Trainer(max_epochs=epochs)
 
     trainer.fit(litmodel, trainloader, validloader)
 

@@ -1,0 +1,8 @@
+
+# Kaggle
+KAGGLE_USERNAME="USERNAME"
+KAGGLE_KEY="KEY"
+
+# WANDB
+WANDB_API_KEY="KEY"
+WANDB_NAME="SpamHamClassification"

@@ -1,0 +1,17 @@
+model:
+  lr: 0.01
+  dropout: 0.5
+  epochs: 20
+  embedding_dim: 20
+  hidden_dim: 128
+
+data:
+  token_len : 40
+  batch_size: 128
+
+enviroment:
+  cuda: false
+  numpy_seed: 123
+  torch_seed: 123
+  python_seed: 321
+  wandb: true
