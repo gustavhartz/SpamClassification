@@ -51,6 +51,9 @@ focus on HYDRA and OPTUNA
 ![reports/figures/WandB.png](reports/figures/WandB.png)
 
 **Data Drifting:**
+Using the TorchDrift framework, data drifting can be identified. First the classification network is setup as as feature extractor, using only the embedding and LSTM layers. This creates a feature representation that is used to define the distriburtion of the data. New data can be compared to this distribution to catch if the data has drifted, based on a test of significance. 
+
+The extracted features of the high-dimensional data can also be  plotted to a 2d space by the sklearn.Isomap function, where the visual repræsentation can contribute to a intuitive illustration of the drifting.
 
 **CI/CD:** Pytest are run for the entire pytest directory "./tests". Furthermore, we also have actions for monitoring
 that the commits live up to the PEP8 standard. This is done with Flake8 and isort.
