@@ -27,7 +27,7 @@ DEPLOY = True
 if DEPLOY:
     service = Model.deploy(
         ws,
-        "SpamHam",
+        "spamham",
         [model],
         dummy_inference_config,
         deployment_config,
