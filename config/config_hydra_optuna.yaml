@@ -1,0 +1,38 @@
+# See configurations for the optuna sweeper at https://hydra.cc/docs/next/plugins/optuna_sweeper/
+# choose Optuna hyperparameter sampler. https://optuna.readthedocs.io/en/stable/reference/samplers.html
+sweeper:
+  _target_: hydra_plugins.hydra_optuna_sweeper.optuna_sweeper.OptunaSweeper
+  storage: null
+  study_name: null
+  n_jobs: 1
+  n_trials: 15
+  direction: minimize
+model:
+  lr:
+    low: 0.001
+    high: 0.01
+    step:
+  dropout:
+    low: 0.1
+    high: 0.9
+  epochs: 5
+  embedding_dim:
+    low:  10
+    high: 50
+    step: 5
+  hidden_dim:
+    low: 64
+    high: 256
+    step: 12
+    
+data:
+  token_len:
+    low: 20
+    high: 40
+    step: 10
+  batch_size: 128
+
+environment:
+  cuda: false
+  torch_seed: 123
+  wandb: false
