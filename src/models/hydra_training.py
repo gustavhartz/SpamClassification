@@ -11,7 +11,8 @@ from src.models.lightning import lynModel
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
-from dotenv import load_dotenv,find_dotenv
+from dotenv import load_dotenv, find_dotenv
+
 load_dotenv(find_dotenv())
 
 
@@ -68,8 +69,12 @@ def my_app(cfg: DictConfig) -> None:
 
     litmodel = lynModel(model, optimizer_lr=lr)
     if cfg.enviroment.wandb:
-        wandb_logger = WandbLogger(project='pytorchlightning')
-        trainer = pl.Trainer(max_epochs=epochs, logger=wandb_logger)
+        hyper = {}
+        hyper.update(cfg['model'])
+        hyper.update(cfg['data'])
+        wandb_logger = WandbLogger(project='MLOPS_SpamHam',config=hyper)
+        trainer = pl.Trainer(max_epochs=epochs, logger=wandb_logger, log_every_n_steps=10)
+        wandb_logger.log_hyperparams(hyper)
     else:
         trainer = pl.Trainer(max_epochs=epochs)
 

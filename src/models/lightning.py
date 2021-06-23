@@ -1,10 +1,6 @@
 import torch
-
-import torch.nn as nn
 import torch.nn.functional as F
-from transformers.file_utils import ModelOutput
 import pytorch_lightning as pl
-
 from sklearn.metrics import accuracy_score
 
 
@@ -41,8 +37,17 @@ class lynModel(pl.LightningModule):
         preds = torch.zeros(output.shape)
         preds[output >= 0.5] = 1
 
-        self.log("val_loss", loss)
-        self.log("val_acc", torch.sum(preds == labels) / len(labels))
+
+        self.log(
+            "val_loss",
+            loss,
+            on_epoch=True
+        )
+        self.log(
+            "val_acc",
+            (torch.sum(preds == labels) / len(labels)).numpy().sum(),
+            on_epoch=True
+        )
 
         return accuracy_score(labels.numpy(), preds.numpy())
 
