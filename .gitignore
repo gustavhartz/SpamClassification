@@ -136,7 +136,8 @@ dmypy.json
 *.ipynb
 
 #data
-data/
+data/processed
+data/raw
 
 
 #torch lightning
