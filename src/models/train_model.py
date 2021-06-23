@@ -1,25 +1,19 @@
 import argparse
-import transformers
-import wandb
 import sys
-import torch
 
-
+import matplotlib.pyplot as plt
 import numpy as np
-
+import pytorch_lightning as pl
+import torch
 import torch.nn as nn
 import torch.optim as optim
-import matplotlib.pyplot as plt
-import pytorch_lightning as pl
-
 from sklearn.metrics import accuracy_score
 from tqdm import tqdm
 from transformers import AutoTokenizer
 
-from src.models.model import LSTM
 from src.data.data_utils import SPAMorHAMDataset
 from src.models.lightning import lynModel
-
+from src.models.model import LSTM
 
 # wandb.init()
 
@@ -132,9 +126,6 @@ class TrainOREvaluate(object):
         train_losses = np.zeros(num_epochs)
         valid_losses = np.zeros(num_epochs)
 
-        writer_train_iter = 0
-        writer_val_iter = 0
-
         loop = tqdm(range(num_epochs))
         for epoch in loop:
             trainiter = iter(trainloader)
@@ -219,39 +210,40 @@ class TrainOREvaluate(object):
         # )  # creates subfolders
 
     def evaluate(self):
-        print("Evaluating until hitting the ceiling")
-        parser = argparse.ArgumentParser(description="Training arguments")
-        parser.add_argument("--load_model_from", default="")
-        # add any additional argument that you want
-        args = parser.parse_args(sys.argv[2:])
-        print(args)
-
-        # TODO: Implement evaluation logic here
-        if args.load_model_from:
-            model = torch.load(args.load_model_from)
-        else:
-            model = torch.load("./models/Net/net_1.model")
-
-        test_set = MNIST(
-            "./data", train=False, download=False, transform=self.transform
-        )
-
-        testloader = torch.utils.data.DataLoader(
-            test_set, batch_size=256, shuffle=False
-        )
-        testiter = iter(testloader)
-
-        test_preds, test_targs = [], []
-        model.eval()
-        for images, labels in testiter:
-            output = model(images)
-
-            # Softmax max arg
-            preds = torch.max(output, 1)[1]
-            test_targs += list(labels.numpy())
-            test_preds += list(preds.data.numpy())
-
-        print("Model test accuracy:", accuracy_score(test_targs, test_preds))
+        raise NotImplementedError
+        # print("Evaluating until hitting the ceiling")
+        # parser = argparse.ArgumentParser(description="Training arguments")
+        # parser.add_argument("--load_model_from", default="")
+        # # add any additional argument that you want
+        # args = parser.parse_args(sys.argv[2:])
+        # print(args)
+        #
+        # # TODO: Implement evaluation logic here
+        # if args.load_model_from:
+        #     model = torch.load(args.load_model_from)
+        # else:
+        #     model = torch.load("./models/Net/net_1.model")
+        #
+        # test_set = MNIST(
+        #     "./data", train=False, download=False, transform=self.transform
+        # )
+        #
+        # testloader = torch.utils.data.DataLoader(
+        #     test_set, batch_size=256, shuffle=False
+        # )
+        # testiter = iter(testloader)
+        #
+        # test_preds, test_targs = [], []
+        # model.eval()
+        # for images, labels in testiter:
+        #     output = model(images)
+        #
+        #     # Softmax max arg
+        #     preds = torch.max(output, 1)[1]
+        #     test_targs += list(labels.numpy())
+        #     test_preds += list(preds.data.numpy())
+        #
+        # print("Model test accuracy:", accuracy_score(test_targs, test_preds))
 
     def lightning(self):
         print("Training day and night")

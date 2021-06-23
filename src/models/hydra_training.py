@@ -1,17 +1,16 @@
-import torch
 import os
-import pytorch_lightning as pl
-from transformers import AutoTokenizer
-from pytorch_lightning.loggers import WandbLogger
-
-from src.models.model import LSTM
-from src.data.data_utils import SPAMorHAMDataset
-from src.models.lightning import lynModel
 
 import hydra
+import pytorch_lightning as pl
+import torch
+from dotenv import find_dotenv, load_dotenv
 from omegaconf import DictConfig, OmegaConf
+from pytorch_lightning.loggers import WandbLogger
+from transformers import AutoTokenizer
 
-from dotenv import load_dotenv, find_dotenv
+from src.data.data_utils import SPAMorHAMDataset
+from src.models.lightning import lynModel
+from src.models.model import LSTM
 
 load_dotenv(find_dotenv())
 
@@ -72,7 +71,7 @@ def my_app(cfg: DictConfig) -> None:
         hyper = {}
         hyper.update(cfg['model'])
         hyper.update(cfg['data'])
-        wandb_logger = WandbLogger(project='MLOPS_SpamHam',config=hyper)
+        wandb_logger = WandbLogger(project='MLOPS_SpamHam', config=hyper)
         trainer = pl.Trainer(max_epochs=epochs, logger=wandb_logger, log_every_n_steps=10)
         wandb_logger.log_hyperparams(hyper)
     else:

@@ -1,6 +1,6 @@
+import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
-import pytorch_lightning as pl
 from sklearn.metrics import accuracy_score
 
 
@@ -36,7 +36,6 @@ class lynModel(pl.LightningModule):
         # log validation loss per epoch
         preds = torch.zeros(output.shape)
         preds[output >= 0.5] = 1
-
 
         self.log(
             "val_loss",

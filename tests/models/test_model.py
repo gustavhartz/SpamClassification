@@ -2,9 +2,7 @@ import logging
 
 import numpy as np
 import pytest
-
 from transformers import AutoTokenizer
-
 
 from src.models.model import LSTM
 
@@ -27,12 +25,15 @@ def test_model_dim():
     tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
 
     test_texts = [
-        "Go until jurong point, crazy.. Available only in bugis n great world la e buffet... Cine there got amore wat...",
+        "Go until jurong point, crazy.. Available only in bugis n great world la e buffet... "
+        "Cine there got amore wat...",
         "Ok lar... Joking wif u oni...",
-        "Free entry in 2 a wkly comp to win FA Cup final tkts 21st May 2005. Text FA to 87121 to receive entry question(std txt rate)T&C's apply 08452810075over18's",
+        "Free entry in 2 a wkly comp to win FA Cup final tkts 21st May 2005. Text FA to 87121 to receive entry question"
+        "(std txt rate)T&C's apply 08452810075over18's",
         "U dun say so early hor... U c already then say...",
         "Nah I don't think he goes to usf, he lives around here though",
-        "FreeMsg Hey there darling it's been 3 week's now and no word back! I'd like some fun you up for it still? Tb ok! XxX std chgs to send, £1.50 to rcv",
+        "FreeMsg Hey there darling it's been 3 week's now and no word back! "
+        "I'd like some fun you up for it still? Tb ok! XxX std chgs to send, £1.50 to rcv",
     ]
 
     batch = tokenizer(

@@ -1,10 +1,11 @@
-import click
 import logging
 from pathlib import Path
-from torchvision import transforms
-from dotenv import find_dotenv, load_dotenv
-import pandas as pd
+
+import click
 import numpy as np
+import pandas as pd
+from dotenv import find_dotenv, load_dotenv
+from torchvision import transforms
 
 
 @click.command()
@@ -33,11 +34,11 @@ def main(process_data):
         # time.sleep(1)
         print("Succesfully downloaded kaggle data")
 
-    #split data into train/test/val
+    # split data into train/test/val
     raw_data = pd.read_csv('data/raw/SPAM text message 20170820 - Data.csv')
-    cat = {'spam': 1,'ham': 0}
+    cat = {'spam': 1, 'ham': 0}
     raw_data.Category = [cat[item] for item in raw_data.Category]
-    
+
     np.random.seed(404)
     msk = np.random.rand(len(raw_data)) < 0.8
     msk_ = np.random.rand(len(raw_data[msk])) < 0.8
