@@ -15,6 +15,8 @@ from src.data.data_utils import SPAMorHAMDataset
 from src.models.lightning import lynModel
 from src.models.model import LSTM
 
+from datetime import datetime
+
 # wandb.init()
 
 
@@ -327,6 +329,8 @@ class TrainOREvaluate(object):
         litmodel = lynModel(model, optimizer_lr=args.lr)
 
         trainer.fit(litmodel, trainloader, validloader)
+
+        torch.save(litmodel.model, f"./src/models/output_models/{datetime.now()}.pkl")
 
 
 if __name__ == "__main__":
