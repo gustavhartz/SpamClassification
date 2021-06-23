@@ -76,11 +76,24 @@ def run_drifter(model_path):
         shuffle=True,
     )
 
+    test_set = SPAMorHAMDriftset(
+        "./data/processed/test_set.csv",
+        input_dim=model.text_len,
+        tokenizer=tokenizer,
+    )
+
+    testloader = torch.utils.data.DataLoader(
+        test_set,
+        batch_size=1049,
+        shuffle=False,
+    )
+
     drift_detector = torchdrift.detectors.KernelMMDDriftDetector()
     torchdrift.utils.fit(trainloader, feature_extractor, drift_detector)
 
     ### Run on new data
-    texts = get_email_spam("./data/raw/fradulent_emails.txt", tokenizer, model.text_len)
+    # texts = get_email_spam("./data/raw/fradulent_emails.txt", tokenizer, model.text_len)
+    texts = next(iter(testloader))
     features = feature_extractor(texts)
     score = drift_detector(features)
     p_val = drift_detector.compute_p_value(features)
