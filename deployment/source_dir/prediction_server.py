@@ -1,10 +1,10 @@
 import json
 import logging
-from transformers import AutoTokenizer
-import torch
 import os
-import logging
+
+import torch
 from model import LSTM
+from transformers import AutoTokenizer
 
 log = logging.getLogger(__name__)
 tokenizer = ""

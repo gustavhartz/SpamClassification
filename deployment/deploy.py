@@ -1,6 +1,4 @@
-from azureml.core import Environment
-from azureml.core import Model
-from azureml.core import Workspace
+from azureml.core import Environment, Model, Workspace
 from azureml.core.model import InferenceConfig
 from azureml.core.webservice import AciWebservice
 

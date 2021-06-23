@@ -1,10 +1,9 @@
-import torchdrift
-import torch
-
-
 import matplotlib.pyplot as plt
+import torch
+import torchdrift
 from sklearn.manifold import Isomap
 from transformers import AutoTokenizer
+
 from src.data.data_utils import SPAMorHAMDriftset
 
 
@@ -79,13 +78,13 @@ def run_drifter(model_path):
     drift_detector = torchdrift.detectors.KernelMMDDriftDetector()
     torchdrift.utils.fit(trainloader, feature_extractor, drift_detector)
 
-    ### Run on new data
+    # Run on new data
     texts = get_email_spam("./data/raw/fradulent_emails.txt", tokenizer, model.text_len)
     features = feature_extractor(texts)
     score = drift_detector(features)
     p_val = drift_detector.compute_p_value(features)
 
-    N_base = drift_detector.base_outputs.size(0)
+    # N_base = drift_detector.base_outputs.size(0)
     mapper = Isomap(n_components=2)
     base_embedded = mapper.fit_transform(drift_detector.base_outputs)
     features_embedded = mapper.transform(features)

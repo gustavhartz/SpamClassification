@@ -63,7 +63,7 @@ class SPAMorHAMDriftset(Dataset):
             idx = idx.tolist()
 
         message = [self.frame.iloc[idx, 1]]
-        label = torch.Tensor([self.frame.iloc[idx, 0]])
+        # label = torch.Tensor([self.frame.iloc[idx, 0]])
 
         if self.tokenizer:
             message = self.tokenizer(

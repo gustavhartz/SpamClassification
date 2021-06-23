@@ -11,7 +11,6 @@ from transformers import AutoTokenizer
 from src.data.data_utils import SPAMorHAMDataset
 from src.models.lightning import lynModel
 from src.models.model import LSTM
-import os
 
 load_dotenv(find_dotenv())
 
