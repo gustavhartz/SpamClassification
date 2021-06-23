@@ -33,14 +33,6 @@ print("Starting experiment:", experiment.name)
 
 run = experiment.submit(config=script_config)
 
-#model_file = 'sh_model.pkl'
-#run.upload_file(name = 'outputs/' + model_file, path_or_stream = './' + model_file)
 
-# Complete the run
-#run.complete()
-
-# Register the model
-#run.register_model(model_path='outputs/diabetes_model.pkl', model_name='diabetes_model',tags={'Training context':'Inline Training'},properties={'AUC': run.get_metrics()['AUC'], 'Accuracy': run.get_metrics()['Accuracy']})
-# Block until the experiment run has completed
 run.wait_for_completion()
 
