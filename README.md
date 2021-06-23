@@ -1,7 +1,6 @@
 # SpamClassification
 <img width="1099" alt="Skærmbillede 2021-06-23 kl  18 54 29" src="https://user-images.githubusercontent.com/48956638/123140602-c3f83900-d457-11eb-8066-afe81174cdd6.png">
 
-
 This project is about classifying emails/sms texts as *spam* or *ham* using deep learning with a primary focus on
 applying MLOPS principles to the task. Given that the data for this task is text data we will be utilizing
 the [huggingface transformers](https://huggingface.co/transformers/) library. This libraray provides pretrained
@@ -29,8 +28,8 @@ Group members:
 For version controlling and ensuring reproducible results we have been applying the hydra framework to our pytorch
 lightning framework.
 
-**OPTUNA:** An open source hyperparameter optimization framework to automate hyperparameter search and we use it for baysian
-grid search using evolutionary algorithms. This is configured using the config_hydra_optuna file.
+**OPTUNA:** An open source hyperparameter optimization framework to automate hyperparameter search and we use it for
+baysian grid search using evolutionary algorithms. This is configured using the config_hydra_optuna file.
 
 **HYDRA:** Hydra is an open-source Python framework that simplifies the development of research and other complex
 applications. The key feature is the ability to dynamically create a hierarchical configuration by composition and
@@ -38,15 +37,23 @@ override it through config files and the command line. The name Hydra comes from
 jobs - much like a Hydra with multiple heads.
 
 **Pytorch Lightning:**
+The lightweight PyTorch wrapper for high-performance AI research. Scale your models, not the boilerplate. Some of the
+advantages include
+
+- Models become hardware agnostic
+- Code is clear to read because engineering code is abstracted away
+- Easier to reproduce
+- Make fewer mistakes because lightning handles the tricky engineering
 
 **Weights & Biases:** Is used for visualizations of training and is implemented as the logger in pytorch lightning. It's
 primary purpose is a tracking the progress of model training. WandB can do hyperparameter sweeps, but we decided to
 focus on HYDRA and OPTUNA
+![reports/figures/WandB.png](reports/figures/WandB.png)
 
 **Data Drifting:**
 
-**CI/CD:** Pytest are run for the entire pytest directory "./tests". Furthermore, we also have actions for monitoring that the
-commits live up to the PEP8 standard. This is done with Flake8 and isort. 
+**CI/CD:** Pytest are run for the entire pytest directory "./tests". Furthermore, we also have actions for monitoring
+that the commits live up to the PEP8 standard. This is done with Flake8 and isort.
 
 Project Organization
 ------------
@@ -100,6 +107,5 @@ Project Organization
     ├── tests              <- pytests using the suggested src layout from pytest documentation
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
 
 --------
