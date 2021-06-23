@@ -1,4 +1,6 @@
 # SpamClassification
+<img width="1099" alt="Skærmbillede 2021-06-23 kl  18 54 29" src="https://user-images.githubusercontent.com/48956638/123140602-c3f83900-d457-11eb-8066-afe81174cdd6.png">
+
 
 This project is about classifying emails/sms texts as *spam* or *ham* using deep learning with a primary focus on
 applying MLOPS principles to the task. Given that the data for this task is text data we will be utilizing
