@@ -14,20 +14,25 @@ class LSTM(nn.Module):
         dropout=0.5,
     ):
         super(LSTM, self).__init__()
+        self.tokenizer_vocab_size = tokenizer_vocab_size
+        self.hidden_dimension = hidden_dimension
+        self.embedding_dim = embedding_dim
+        self.text_len = text_len
+        self.dropout = dropout
 
         self.embedding = nn.Embedding(
-            tokenizer_vocab_size, embedding_dim, padding_idx=0
+            self.tokenizer_vocab_size, self.embedding_dim, padding_idx=0
         )
-        self.dimension = hidden_dimension
+        self.dimension = self.hidden_dimension
         self.lstm = nn.LSTM(
-            input_size=embedding_dim,
-            hidden_size=hidden_dimension,
+            input_size=self.embedding_dim,
+            hidden_size=self.hidden_dimension,
             num_layers=1,
             batch_first=True,
             bidirectional=False,
         )
-        self.drop = nn.Dropout(p=dropout)
-        self.fc = nn.Linear(text_len * hidden_dimension, 1)
+        self.drop = nn.Dropout(p=self.dropout)
+        self.fc = nn.Linear(self.text_len * self.hidden_dimension, 1)
 
     def forward(self, text):
 
