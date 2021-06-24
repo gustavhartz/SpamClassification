@@ -3,7 +3,7 @@
 
 This project is about classifying emails/sms texts as *spam* or *ham* using deep learning with a primary focus on
 applying MLOPS principles to the task. Given that the data for this task is text data we will be utilizing
-the [huggingface transformers](https://huggingface.co/transformers/) library. This libraray provides pretrained
+the [huggingface transformers](https://huggingface.co/transformers/) library. This library provides pretrained
 tokenizer modules that eliminates the need to develop our own text preprocessing, and instead focus on the ML Ops
 apsects of the implementation.
 
