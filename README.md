@@ -23,8 +23,6 @@ Group members:
 
 ## Major Frameworks and principles applied
 
-### OPTUNA & HYDRA
-
 For version controlling and ensuring reproducible results we have been applying the hydra framework to our pytorch
 lightning framework.
 
